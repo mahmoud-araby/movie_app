@@ -8,8 +8,10 @@ class ShortMovieData {
   String posterPath;
   double popularity;
   String overview;
+  int currentPage = 0;
+  int maxPages;
 
-  ShortMovieData.name(
+  ShortMovieData(
       this.id,
       this.voteCount,
       this.voteAverage,
@@ -18,6 +20,7 @@ class ShortMovieData {
       this.backdropPath,
       this.posterPath,
       this.popularity,
+      this.maxPages,
       this.overview);
 
   ShortMovieData.fromJson(Map<String, dynamic> movie) {

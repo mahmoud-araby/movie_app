@@ -4,94 +4,100 @@ import 'package:movieapp/Module/short_movie_data.dart';
 import '../networking/TMBD.dart';
 
 mixin DataExchanger {
-  Future<List<ShortMovieData>> getRecommendedMovies(int id) async {
+  Future<Map<String, dynamic>> getRecommendedMovies(int id, int page) async {
     List<ShortMovieData> ret = [];
     var rawData;
-    rawData = await NetworkHelper.getRecommended(id);
+    rawData = await NetworkHelper.getRecommended(id, page);
     if (rawData == null) {
       return null;
     }
+    int pages = rawData['total_pages'];
     rawData = rawData['results'];
     rawData.forEach((movie) {
       ShortMovieData newMovie = ShortMovieData.fromJson(movie);
       ret.add(newMovie);
     });
-    return ret;
+    return {'list': ret, 'pages': pages};
   }
 
-  Future<List<ShortMovieData>> getSimilarMovies(int id) async {
+  Future<Map<String, dynamic>> getSimilarMovies(int id, int page) async {
     List<ShortMovieData> ret = [];
     var rawData;
-    rawData = await NetworkHelper.getSimilar(id);
+    rawData = await NetworkHelper.getSimilar(id, page);
     if (rawData == null) {
       return null;
     }
+    int pages = rawData['total_pages'];
     rawData = rawData['results'];
     rawData.forEach((movie) {
       ShortMovieData newMovie = ShortMovieData.fromJson(movie);
       ret.add(newMovie);
     });
-    return ret;
+    return {'list': ret, 'pages': pages};
   }
 
-  Future<List<ShortMovieData>> getUpcomingMovies() async {
-    List<ShortMovieData> ret = [];
+  Future<Map<String, dynamic>> getUpcomingMovies(int page) async {
+    List<ShortMovieData> list = [];
     var rawData;
-    rawData = await NetworkHelper.getUpcoming();
+    rawData = await NetworkHelper.getUpcoming(page);
     if (rawData == null) {
       return null;
     }
+    int pages = rawData['total_pages'];
     rawData = rawData['results'];
     rawData.forEach((movie) {
       ShortMovieData newMovie = ShortMovieData.fromJson(movie);
-      ret.add(newMovie);
+      list.add(newMovie);
     });
-    return ret;
+    return {'list': list, 'pages': pages};
   }
 
-  Future<List<ShortMovieData>> getTrendedMovies() async {
-    List<ShortMovieData> ret = [];
+  Future<Map<String, dynamic>> getTrendedMovies(int page) async {
+    List<ShortMovieData> list = [];
     var rawData;
-    rawData = await NetworkHelper.getTrending();
+    rawData = await NetworkHelper.getTrending(page);
     if (rawData == null) {
       return null;
     }
+    int pages = rawData['total_pages'];
     rawData = rawData['results'];
     rawData.forEach((movie) {
       ShortMovieData newMovie = ShortMovieData.fromJson(movie);
-      ret.add(newMovie);
+      list.add(newMovie);
     });
-    return ret;
+    return {'list': list, 'pages': pages};
   }
 
-  Future<List<ShortMovieData>> getPopularMovies() async {
+  Future<Map<String, dynamic>> getPopularMovies(int page) async {
     List<ShortMovieData> ret = [];
     var rawData;
-    rawData = await NetworkHelper.getPopular();
+    rawData = await NetworkHelper.getPopular(page);
     if (rawData == null) {
       return null;
     }
+    int pages = rawData['total_pages'];
     rawData = rawData['results'];
     rawData.forEach((movie) {
       ShortMovieData newMovie = ShortMovieData.fromJson(movie);
       ret.add(newMovie);
     });
-    return ret;
+    return {'list': ret, 'pages': pages};
   }
 
-  Future<List<ShortMovieData>> getTopRatedMovies() async {
+  Future<Map<String, dynamic>> getTopRatedMovies(int page) async {
     List<ShortMovieData> ret = [];
     var rawData;
-    rawData = await NetworkHelper.getTopRated();
+    rawData = await NetworkHelper.getTopRated(page);
     if (rawData == null) {
       return null;
     }
+    int pages = rawData['total_pages'];
     rawData = rawData['results'];
     rawData.forEach((movie) {
       ShortMovieData newMovie = ShortMovieData.fromJson(movie);
       ret.add(newMovie);
     });
-    return ret;
+    return {'list': ret, 'pages': pages};
   }
 
   Future<DetailedMovieData> getMovieDetails(int id) async {
